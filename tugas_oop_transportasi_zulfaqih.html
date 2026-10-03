@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Transportasi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .identitas {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 16px;
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        .identitas p {
+            margin: 5px 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .btn-tampil {
+            background-color: #2ecc71;
+            margin-bottom: 20px;
+            width: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn-tampil:hover {
+            background-color: #27ae60;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Sistem Manajemen Transportasi</h1>
+    
+    <div class="identitas">
+        <p><strong>Nama:</strong> Zulfaqih Ashar Hasan</p>
+        <p><strong>Tugas:</strong> Pertemuan 4 – OOP JavaScript</p>
+    </div>
+
+    <h2>Tambah Pelanggan Baru</h2>
+    <div class="form-group">
+        <label for="nama">Nama Pelanggan:</label>
+        <input type="text" id="nama" placeholder="Masukkan nama pelanggan">
+    </div>
+    <div class="form-group">
+        <label for="nomorTelepon">Nomor Telepon:</label>
+        <input type="text" id="nomorTelepon" placeholder="Masukkan nomor telepon">
+    </div>
+    <div class="form-group">
+        <label for="kendaraan">Kendaraan yang Disewa:</label>
+        <input type="text" id="kendaraan" placeholder="Masukkan nama kendaraan">
+    </div>
+    <button onclick="tambahPelanggan()">Tambah Pelanggan</button>
+
+    <hr style="margin: 30px 0; border: 1px solid #ecf0f1;">
+
+    <h2>Daftar Pelanggan</h2>
+    <button class="btn-tampil" onclick="tampilkanPelanggan()">Tampilkan Pelanggan</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Pelanggan</th>
+                <th>Nomor Telepon</th>
+                <th>Kendaraan Disewa</th>
+            </tr>
+        </thead>
+        <tbody id="tabelPelanggan">
+            <!-- Data akan ditampilkan di sini oleh JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Class untuk menyimpan data pelanggan
+    class Pelanggan {
+        // Constructor digunakan untuk mengisi data awal pelanggan
+        constructor(nama, nomorTelepon, kendaraanDisewa) {
+            this.nama = nama;
+            this.nomorTelepon = nomorTelepon;
+            this.kendaraanDisewa = kendaraanDisewa;
+        }
+
+        // Method digunakan untuk mencatat kendaraan yang disewa
+        sewaKendaraan(kendaraan) {
+            this.kendaraanDisewa = kendaraan;
+        }
+    }
+
+    // Array untuk menyimpan seluruh data pelanggan
+    let daftarPelanggan = [];
+
+    // Membuat objek menggunakan class Pelanggan
+    const pelanggan1 = new Pelanggan("Zulfaqih Ashar Hasan", "081234567890", "Toyota Avanza");
+    const pelanggan2 = new Pelanggan("Andi Pratama", "082345678901", "Honda Brio");
+    const pelanggan3 = new Pelanggan("Budi Santoso", "083456789012", "Mitsubishi Xpander");
+
+    // Memasukkan objek awal ke dalam array daftarPelanggan
+    daftarPelanggan.push(pelanggan1);
+    daftarPelanggan.push(pelanggan2);
+    daftarPelanggan.push(pelanggan3);
+
+    // Fungsi untuk menampilkan data pelanggan ke tabel
+    function tampilkanPelanggan() {
+        const tbody = document.getElementById("tabelPelanggan");
+        tbody.innerHTML = ""; // Mengosongkan isi tabel sebelum menampilkan data baru
+
+        // Melakukan perulangan pada array untuk menampilkan setiap data pelanggan
+        for (let i = 0; i < daftarPelanggan.length; i++) {
+            const pelanggan = daftarPelanggan[i];
+            
+            // Membuat elemen baris tabel
+            const tr = document.createElement("tr");
+            
+            // Membuat dan mengisi kolom
+            const tdNo = document.createElement("td");
+            tdNo.textContent = i + 1;
+            
+            const tdNama = document.createElement("td");
+            tdNama.textContent = pelanggan.nama;
+            
+            const tdTelepon = document.createElement("td");
+            tdTelepon.textContent = pelanggan.nomorTelepon;
+            
+            const tdKendaraan = document.createElement("td");
+            tdKendaraan.textContent = pelanggan.kendaraanDisewa;
+            
+            // Memasukkan kolom ke dalam baris
+            tr.appendChild(tdNo);
+            tr.appendChild(tdNama);
+            tr.appendChild(tdTelepon);
+            tr.appendChild(tdKendaraan);
+            
+            // Memasukkan baris ke dalam tbody tabel
+            tbody.appendChild(tr);
+        }
+    }
+
+    // Fungsi untuk menambah data pelanggan dari form
+    function tambahPelanggan() {
+        // Mengambil nilai dari input form
+        const namaInput = document.getElementById("nama").value;
+        const teleponInput = document.getElementById("nomorTelepon").value;
+        const kendaraanInput = document.getElementById("kendaraan").value;
+
+        // Validasi form: memastikan semua data terisi
+        if (namaInput === "" || teleponInput === "" || kendaraanInput === "") {
+            alert("Semua data harus diisi!");
+            return; // Menghentikan proses jika ada data kosong
+        }
+
+        // Membuat object baru dari class Pelanggan
+        const pelangganBaru = new Pelanggan(namaInput, teleponInput, kendaraanInput);
+        
+        // Memasukkan objek pelanggan baru ke dalam array
+        daftarPelanggan.push(pelangganBaru);
+
+        // Menampilkan pesan sukses
+        alert("Data pelanggan berhasil ditambahkan.");
+
+        // Memperbarui tampilan tabel secara otomatis
+        tampilkanPelanggan();
+
+        // Mengosongkan form setelah data berhasil ditambahkan
+        document.getElementById("nama").value = "";
+        document.getElementById("nomorTelepon").value = "";
+        document.getElementById("kendaraan").value = "";
+    }
+
+    // Menampilkan data pelanggan saat halaman pertama kali dimuat
+    tampilkanPelanggan();
+</script>
+
+</body>
+</html>
